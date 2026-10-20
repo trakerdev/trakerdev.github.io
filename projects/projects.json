@@ -1,1 +1,101 @@
-
+[
+  {
+    "id": "dr-carlo-reyes",
+    "name": "Dr. Carlo Reyes - Portal Médico",
+    "type": "Web / Branding",
+    "status": "online",
+    "icon": "medical_services",
+    "description": "Sitio web profesional y plataforma de difusión médica con diseño responsivo, presentación de servicios de salud e interfaz orientada a la atención al paciente.",
+    "tags": ["HTML5", "CSS3", "JavaScript", "UI / UX"],
+    "live_url": "https://drcarloreyes.com/",
+    "github_url": ""
+  },
+  {
+    "id": "entorno-grafico-gdl",
+    "name": "Entorno Gráfico GDL",
+    "type": "Web / Commercial",
+    "status": "online",
+    "icon": "palette",
+    "description": "Plataforma web comercial y catálogo de servicios de impresión, diseño y soluciones gráficas con interfaz moderna y adaptable.",
+    "tags": ["HTML5", "CSS3 / SCSS", "JavaScript", "Responsive Design"],
+    "live_url": "https://entornograficogdl.com/",
+    "github_url": ""
+  },
+  {
+    "id": "luah-asesores",
+    "name": "LUAH Asesores",
+    "type": "Web / Corporate",
+    "status": "online",
+    "icon": "business_center",
+    "description": "Sitio corporativo enfocado en consultoría y asesoría profesional, optimizado para conversión, velocidad de carga y navegación clara en todos los dispositivos.",
+    "tags": ["HTML5", "CSS3", "JavaScript", "Bootstrap"],
+    "live_url": "https://luahasesores.com/",
+    "github_url": ""
+  },
+  {
+    "id": "creamoscodigo-comecome",
+    "name": "Come Come Arcade",
+    "type": "Game Dev / Web",
+    "status": "online",
+    "icon": "sports_esports",
+    "description": "Juego retro interactivo estilo arcade para navegador desarrollado en Canvas, con procesamiento de avatares/sprites en servidor y soporte de parámetros dinámicos.",
+    "tags": ["JavaScript", "HTML5 Canvas", "PHP", "Game Dev"],
+    "live_url": "https://creamoscodigo.com/comecome",
+    "github_url": ""
+  },
+  {
+    "id": "creamoscodigo-fest",
+    "name": "Creamos Código Fest",
+    "type": "Web Platform / Event",
+    "status": "online",
+    "icon": "celebration",
+    "description": "Sitio web interactivo y plataforma de difusión para el evento Creamos Código Fest, optimizado con interfaz responsiva, diseño moderno y experiencia de usuario fluida.",
+    "tags": ["HTML5", "CSS3 / SCSS", "JavaScript", "Bootstrap"],
+    "live_url": "https://creamoscodigo.com/fest",
+    "github_url": ""
+  },
+  {
+    "id": "dedocente",
+    "name": "DedoCente - Finanzas",
+    "type": "SaaS / WebApp",
+    "status": "online",
+    "icon": "account_balance_wallet",
+    "description": "Sistema contable modular autoinstalable con roles, métricas interactivas y exportación Excel.",
+    "tags": ["PHP", "Bootstrap", "Chart.js", "Axios"],
+    "live_url": "https://creamoscodigo.com/dedocente",
+    "github_url": ""
+  },
+  {
+    "id": "moviesdirect",
+    "name": "MoviesDirect",
+    "type": "Self-Hosted",
+    "status": "online",
+    "icon": "smart_display",
+    "description": "Plataforma web para streaming y administración multimedia local con soporte HLS y transcodificación.",
+    "tags": ["PHP", "Vanilla JS", "Jest", "HLS"],
+    "live_url": "",
+    "github_url": "https://github.com/trakerdev/moviesdirect"
+  },
+  {
+    "id": "automation-suite",
+    "name": "Server Automation Suite",
+    "type": "CLI & DevOps",
+    "status": "dev",
+    "icon": "terminal",
+    "description": "Scripts Bash para escaneo SMART, mantenimiento de discos y alertas a Telegram.",
+    "tags": ["Bash", "FFprobe", "Telegram API", "Cron"],
+    "live_url": "",
+    "github_url": "https://github.com/trakerdev"
+  },
+  {
+    "id": "wpsoffice-2019-esp",
+    "name": "WPS Office 2019 Español",
+    "type": "Linux / Traducción",
+    "status": "archived",
+    "icon": "translate",
+    "description": "Paquete y scripts de traducción al español e interfaz adaptada para la suite ofimática WPS Office 2019 en distribuciones Linux.",
+    "tags": ["Linux", "Traducción", "Shell", "Open Source"],
+    "live_url": "",
+    "github_url": "https://github.com/trakerdev/WPSOffice-2019-Esp"
+  }
+]
