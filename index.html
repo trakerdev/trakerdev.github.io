@@ -173,6 +173,57 @@
       font-size: 22px;
       vertical-align: middle;
     }
+    
+    /* Estados de proyecto */
+    .status-pill {
+      font-family: var(--font-code);
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 500;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* Online / Activo (Verde) */
+    .status-online {
+      background: rgba(39, 201, 63, 0.12);
+      color: #4ade80;
+      border: 1px solid rgba(39, 201, 63, 0.3);
+    }
+    .status-online .status-dot {
+      background: #22c55e;
+      box-shadow: 0 0 6px #22c55e;
+    }
+
+    /* En Desarrollo (Amarillo) */
+    .status-dev {
+      background: rgba(255, 189, 46, 0.12);
+      color: #fde047;
+      border: 1px solid rgba(255, 189, 46, 0.3);
+    }
+    .status-dev .status-dot {
+      background: #eab308;
+      box-shadow: 0 0 6px #eab308;
+    }
+
+    /* Archivado / Mantenimiento (Gris) */
+    .status-archived {
+      background: rgba(148, 163, 184, 0.1);
+      color: #94a3b8;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+    }
+    .status-archived .status-dot {
+      background: #64748b;
+    }
   </style>
 </head>
 <body>
@@ -444,79 +495,33 @@
     </div>
   </section>
 
-  <!-- Featured Projects -->
+  <!-- Featured Projects Section -->
   <section id="projects" class="py-5">
     <div class="container">
       <div class="mb-5" data-aos="fade-up">
-        <h3 class="section-title h2 mb-2">Proyectos & Desarrollos</h3>
-        <p class="text-secondary">Soluciones personalizadas, plataformas autohospedadas y aplicaciones a medida.</p>
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-2">
+          <h3 class="section-title h2 mb-0">Proyectos & Desarrollos</h3>
+          
+          <!-- Contadores dinámicos -->
+          <div id="projects-counter" class="d-none font-code small d-inline-flex flex-wrap gap-2">
+            <span class="status-pill status-online">
+              <span class="status-dot"></span>
+              <span id="count-online">0</span> Online
+            </span>
+            <span class="status-pill status-dev">
+              <span class="status-dot"></span>
+              <span id="count-dev">0</span> En desarrollo
+            </span>
+          </div>
+        </div>
+        <p class="text-secondary mb-0">Soluciones personalizadas, plataformas autohospedadas y módulos a medida.</p>
       </div>
 
-      <div class="row g-4">
-        <!-- MoviesDirect -->
-        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-          <div class="dev-card p-4 d-flex flex-column">
-            <div class="d-flex justify-content-between align-items-start mb-3">
-              <div class="icon-box mb-0">
-                <span class="material-symbols-outlined">smart_display</span>
-              </div>
-              <span class="badge bg-secondary font-code">Self-Hosted</span>
-            </div>
-            <h4 class="h5 fw-bold text-white mb-2">MoviesDirect</h4>
-            <p class="text-secondary small flex-grow-1">
-              Plataforma web personalizada para streaming y administración de catálogo multimedia local. Integra pruebas automatizadas con Jest y pipeline de carga optimizada para navegadores.
-            </p>
-            <div class="d-flex flex-wrap gap-1 mt-3">
-              <span class="tech-pill">PHP</span>
-              <span class="tech-pill">Vanilla JS</span>
-              <span class="tech-pill">Jest</span>
-              <span class="tech-pill">HLS</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- DedoCente Finanzas -->
-        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
-          <div class="dev-card p-4 d-flex flex-column">
-            <div class="d-flex justify-content-between align-items-start mb-3">
-              <div class="icon-box mb-0">
-                <span class="material-symbols-outlined">account_balance_wallet</span>
-              </div>
-              <span class="badge bg-secondary font-code">SaaS / WebApp</span>
-            </div>
-            <h4 class="h5 fw-bold text-white mb-2">DedoCente - Finanzas</h4>
-            <p class="text-secondary small flex-grow-1">
-              Sistema contable modular autoinstalable. Incluye control de roles de usuario, seguimiento de ingresos y egresos, generación de métricas gráficas interactivas y exportación nativa a Excel.
-            </p>
-            <div class="d-flex flex-wrap gap-1 mt-3">
-              <span class="tech-pill">PHP</span>
-              <span class="tech-pill">Bootstrap</span>
-              <span class="tech-pill">Chart.js</span>
-              <span class="tech-pill">Axios</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Automatización & Shell Tools -->
-        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
-          <div class="dev-card p-4 d-flex flex-column">
-            <div class="d-flex justify-content-between align-items-start mb-3">
-              <div class="icon-box mb-0">
-                <span class="material-symbols-outlined">terminal</span>
-              </div>
-              <span class="badge bg-secondary font-code">CLI & DevOps</span>
-            </div>
-            <h4 class="h5 fw-bold text-white mb-2">Server Automation Suite</h4>
-            <p class="text-secondary small flex-grow-1">
-              Colección de scripts Bash (como <code>check_web.sh</code>) y servicios systemd para escaneo de salud de discos, optimización por lotes de contenedores MP4 y notificaciones críticas vía Telegram Bot.
-            </p>
-            <div class="d-flex flex-wrap gap-1 mt-3">
-              <span class="tech-pill">Bash</span>
-              <span class="tech-pill">FFprobe</span>
-              <span class="tech-pill">Telegram API</span>
-              <span class="tech-pill">Cron</span>
-            </div>
-          </div>
+      <!-- Contenedor dinámico donde se inyectan las tarjetas -->
+      <div class="row g-4" id="projects-container">
+        <div class="col-12 text-center text-secondary font-code py-4">
+          <span class="material-symbols-outlined fs-3 text-info">sync</span>
+          <p class="mt-2 mb-0">Cargando repositorios y módulos...</p>
         </div>
       </div>
     </div>
@@ -567,6 +572,127 @@
       once: true,
       offset: 60
     });
+
+    async function loadProjects() {
+      const container = document.getElementById('projects-container');
+      const counterWrapper = document.getElementById('projects-counter');
+      const countOnlineEl = document.getElementById('count-online');
+      const countDevEl = document.getElementById('count-dev');
+      
+      const statusConfig = {
+        online: { label: 'Online', class: 'status-online' },
+        dev: { label: 'En desarrollo', class: 'status-dev' },
+        archived: { label: 'Archivado', class: 'status-archived' }
+      };
+
+      try {
+        const response = await fetch('projects/projects.json');
+        if (!response.ok) throw new Error('No se pudo cargar el listado');
+        
+        const projects = await response.json();
+        container.innerHTML = '';
+
+        // Cálculo de métricas
+        let onlineCount = 0;
+        let devCount = 0;
+
+        projects.forEach(proj => {
+          const s = (proj.status || '').toLowerCase();
+          if (s === 'online') onlineCount++;
+          if (s === 'dev') devCount++;
+        });
+
+        // Actualizar y visibilizar los contadores en el encabezado
+        if (countOnlineEl && countDevEl && counterWrapper) {
+          countOnlineEl.textContent = onlineCount;
+          countDevEl.textContent = devCount;
+          counterWrapper.classList.remove('d-none');
+          counterWrapper.classList.add('d-flex');
+        }
+
+        // Renderizado de tarjetas
+        projects.forEach((proj, index) => {
+          const delay = ((index % 3) + 1) * 100;
+          
+          const tagsHtml = (proj.tags || []).map(tag => `<span class="tech-pill">${tag}</span>`).join('');
+          
+          let statusHtml = '';
+          if (proj.status && statusConfig[proj.status.toLowerCase()]) {
+            const cfg = statusConfig[proj.status.toLowerCase()];
+            statusHtml = `
+              <span class="status-pill ${cfg.class}">
+                <span class="status-dot"></span>
+                <span>${cfg.label}</span>
+              </span>
+            `;
+          }
+
+          const hasLive = proj.live_url && proj.live_url.trim() !== '';
+          const hasGithub = proj.github_url && proj.github_url.trim() !== '';
+
+          let actionsHtml = '';
+          if (hasLive || hasGithub) {
+            actionsHtml = `
+              <div class="pt-3 mt-auto border-top border-dark d-flex flex-wrap gap-2">
+                ${hasLive ? `
+                  <a href="${proj.live_url}" target="_blank" rel="noopener noreferrer" 
+                    class="btn btn-sm btn-outline-info font-code d-inline-flex align-items-center gap-1 text-decoration-none">
+                    <span class="material-symbols-outlined fs-6">open_in_browser</span>
+                    <span>Ver Website</span>
+                  </a>
+                ` : ''}
+                ${hasGithub ? `
+                  <a href="${proj.github_url}" target="_blank" rel="noopener noreferrer" 
+                    class="btn btn-sm btn-outline-light font-code d-inline-flex align-items-center gap-1 text-decoration-none">
+                    <span class="material-symbols-outlined fs-6">code_blocks</span>
+                    <span>Ver Repositorio</span>
+                  </a>
+                ` : ''}
+              </div>
+            `;
+          }
+
+          const cardHtml = `
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="${delay}">
+              <div class="dev-card p-4 d-flex flex-column h-100">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                  <div class="icon-box mb-0">
+                    <span class="material-symbols-outlined">${proj.icon || 'deployed_code'}</span>
+                  </div>
+                  <div class="d-flex align-items-center gap-2">
+                    ${statusHtml}
+                    <span class="badge bg-secondary font-code">${proj.type}</span>
+                  </div>
+                </div>
+                <h4 class="h5 fw-bold text-white mb-2">${proj.name}</h4>
+                <p class="text-secondary small mb-3">${proj.description}</p>
+                <div class="d-flex flex-wrap gap-1 mb-3">
+                  ${tagsHtml}
+                </div>
+                ${actionsHtml}
+              </div>
+            </div>
+          `;
+
+          container.insertAdjacentHTML('beforeend', cardHtml);
+        });
+
+        if (typeof AOS !== 'undefined') {
+          AOS.refresh();
+        }
+
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = `
+          <div class="col-12 text-center text-danger font-code py-4">
+            <p class="mb-0">// Error al cargar los proyectos: verifica que projects/projects.json sea accesible.</p>
+          </div>
+        `;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadProjects);
   </script>
+  
 </body>
 </html>
