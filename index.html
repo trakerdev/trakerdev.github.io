@@ -573,125 +573,160 @@
       offset: 60
     });
 
-    async function loadProjects() {
-      const container = document.getElementById('projects-container');
-      const counterWrapper = document.getElementById('projects-counter');
-      const countOnlineEl = document.getElementById('count-online');
-      const countDevEl = document.getElementById('count-dev');
-      
-      const statusConfig = {
-        online: { label: 'Online', class: 'status-online' },
-        dev: { label: 'En desarrollo', class: 'status-dev' },
-        archived: { label: 'Archivado', class: 'status-archived' }
-      };
-
-      try {
-        const response = await fetch('projects/projects.json');
-        if (!response.ok) throw new Error('No se pudo cargar el listado');
+    // Determina el grupo al que pertenece el proyecto
+      function getProjectGroupPriority(proj) {
+        const live = (proj.live_url || '').trim().toLowerCase();
         
-        const projects = await response.json();
-        container.innerHTML = '';
-
-        // Cálculo de métricas
-        let onlineCount = 0;
-        let devCount = 0;
-
-        projects.forEach(proj => {
-          const s = (proj.status || '').toLowerCase();
-          if (s === 'online') onlineCount++;
-          if (s === 'dev') devCount++;
-        });
-
-        // Actualizar y visibilizar los contadores en el encabezado
-        if (countOnlineEl && countDevEl && counterWrapper) {
-          countOnlineEl.textContent = onlineCount;
-          countDevEl.textContent = devCount;
-          counterWrapper.classList.remove('d-none');
-          counterWrapper.classList.add('d-flex');
+        // Grupo 1: Dominio propio (tiene live_url y no es creamoscodigo.com)
+        if (live !== '' && !live.includes('creamoscodigo.com')) {
+          return 1;
         }
+        
+        // Grupo 2: Ecosistema Creamos Código
+        if (live.includes('creamoscodigo.com')) {
+          return 2;
+        }
+        
+        // Grupo 3: GitHub / Herramientas sin demo web independiente
+        return 3;
+      }
 
-        // Renderizado de tarjetas
-        projects.forEach((proj, index) => {
-          const delay = ((index % 3) + 1) * 100;
-          
-          const tagsHtml = (proj.tags || []).map(tag => `<span class="tech-pill">${tag}</span>`).join('');
-          
-          let statusHtml = '';
-          if (proj.status && statusConfig[proj.status.toLowerCase()]) {
-            const cfg = statusConfig[proj.status.toLowerCase()];
-            statusHtml = `
-              <span class="status-pill ${cfg.class}">
-                <span class="status-dot"></span>
-                <span>${cfg.label}</span>
-              </span>
-            `;
+      // Ordena por grupo y luego alfabéticamente por nombre
+      function sortProjects(projects) {
+        return projects.sort((a, b) => {
+          const priorityA = getProjectGroupPriority(a);
+          const priorityB = getProjectGroupPriority(b);
+
+          if (priorityA !== priorityB) {
+            return priorityA - priorityB;
           }
 
-          const hasLive = proj.live_url && proj.live_url.trim() !== '';
-          const hasGithub = proj.github_url && proj.github_url.trim() !== '';
+          // Orden alfabético sensible a caracteres en español
+          return a.name.localeCompare(b.name, 'es', { sensitivity: 'base' });
+        });
+      }
 
-          let actionsHtml = '';
-          if (hasLive || hasGithub) {
-            actionsHtml = `
-              <div class="pt-3 mt-auto border-top border-dark d-flex flex-wrap gap-2">
-                ${hasLive ? `
-                  <a href="${proj.live_url}" target="_blank" rel="noopener noreferrer" 
-                    class="btn btn-sm btn-outline-info font-code d-inline-flex align-items-center gap-1 text-decoration-none">
-                    <span class="material-symbols-outlined fs-6">open_in_browser</span>
-                    <span>Ver Website</span>
-                  </a>
-                ` : ''}
-                ${hasGithub ? `
-                  <a href="${proj.github_url}" target="_blank" rel="noopener noreferrer" 
-                    class="btn btn-sm btn-outline-light font-code d-inline-flex align-items-center gap-1 text-decoration-none">
-                    <span class="material-symbols-outlined fs-6">code_blocks</span>
-                    <span>Ver Repositorio</span>
-                  </a>
-                ` : ''}
-              </div>
-            `;
+      async function loadProjects() {
+        const container = document.getElementById('projects-container');
+        const counterWrapper = document.getElementById('projects-counter');
+        const countOnlineEl = document.getElementById('count-online');
+        const countDevEl = document.getElementById('count-dev');
+        
+        const statusConfig = {
+          online: { label: 'Online', class: 'status-online' },
+          dev: { label: 'En desarrollo', class: 'status-dev' },
+          archived: { label: 'Archivado', class: 'status-archived' }
+        };
+
+        try {
+          const response = await fetch('projects/projects.json');
+          if (!response.ok) throw new Error('No se pudo cargar el archivo');
+          
+          let projects = await response.json();
+          container.innerHTML = '';
+
+          // Cálculo de métricas
+          let onlineCount = 0;
+          let devCount = 0;
+
+          projects.forEach(proj => {
+            const s = (proj.status || '').toLowerCase();
+            if (s === 'online') onlineCount++;
+            if (s === 'dev') devCount++;
+          });
+
+          if (countOnlineEl && countDevEl && counterWrapper) {
+            countOnlineEl.textContent = onlineCount;
+            countDevEl.textContent = devCount;
+            counterWrapper.classList.remove('d-none');
+            counterWrapper.classList.add('d-flex');
           }
 
-          const cardHtml = `
-            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="${delay}">
-              <div class="dev-card p-4 d-flex flex-column h-100">
-                <div class="d-flex justify-content-between align-items-start mb-3">
-                  <div class="icon-box mb-0">
-                    <span class="material-symbols-outlined">${proj.icon || 'deployed_code'}</span>
-                  </div>
-                  <div class="d-flex align-items-center gap-2">
-                    ${statusHtml}
-                    <span class="badge bg-secondary font-code">${proj.type}</span>
-                  </div>
+          // Aplicar ordenamiento dinámico
+          projects = sortProjects(projects);
+
+          // Renderizado de tarjetas
+          projects.forEach((proj, index) => {
+            const delay = ((index % 3) + 1) * 100;
+            
+            const tagsHtml = (proj.tags || []).map(tag => `<span class="tech-pill">${tag}</span>`).join('');
+            
+            let statusHtml = '';
+            if (proj.status && statusConfig[proj.status.toLowerCase()]) {
+              const cfg = statusConfig[proj.status.toLowerCase()];
+              statusHtml = `
+                <span class="status-pill ${cfg.class}">
+                  <span class="status-dot"></span>
+                  <span>${cfg.label}</span>
+                </span>
+              `;
+            }
+
+            const hasLive = proj.live_url && proj.live_url.trim() !== '';
+            const hasGithub = proj.github_url && proj.github_url.trim() !== '';
+
+            let actionsHtml = '';
+            if (hasLive || hasGithub) {
+              actionsHtml = `
+                <div class="pt-3 mt-auto border-top border-dark d-flex flex-wrap gap-2">
+                  ${hasLive ? `
+                    <a href="${proj.live_url}" target="_blank" rel="noopener noreferrer" 
+                      class="btn btn-sm btn-outline-info font-code d-inline-flex align-items-center gap-1 text-decoration-none">
+                      <span class="material-symbols-outlined fs-6">open_in_browser</span>
+                      <span>Ver Website</span>
+                    </a>
+                  ` : ''}
+                  ${hasGithub ? `
+                    <a href="${proj.github_url}" target="_blank" rel="noopener noreferrer" 
+                      class="btn btn-sm btn-outline-light font-code d-inline-flex align-items-center gap-1 text-decoration-none">
+                      <span class="material-symbols-outlined fs-6">code_blocks</span>
+                      <span>Ver Repositorio</span>
+                    </a>
+                  ` : ''}
                 </div>
-                <h4 class="h5 fw-bold text-white mb-2">${proj.name}</h4>
-                <p class="text-secondary small mb-3">${proj.description}</p>
-                <div class="d-flex flex-wrap gap-1 mb-3">
-                  ${tagsHtml}
+              `;
+            }
+
+            const cardHtml = `
+              <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="${delay}">
+                <div class="dev-card p-4 d-flex flex-column h-100">
+                  <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div class="icon-box mb-0">
+                      <span class="material-symbols-outlined">${proj.icon || 'deployed_code'}</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                      ${statusHtml}
+                      <span class="badge bg-secondary font-code">${proj.type}</span>
+                    </div>
+                  </div>
+                  <h4 class="h5 fw-bold text-white mb-2">${proj.name}</h4>
+                  <p class="text-secondary small mb-3">${proj.description}</p>
+                  <div class="d-flex flex-wrap gap-1 mb-3">
+                    ${tagsHtml}
+                  </div>
+                  ${actionsHtml}
                 </div>
-                ${actionsHtml}
               </div>
+            `;
+
+            container.insertAdjacentHTML('beforeend', cardHtml);
+          });
+
+          if (typeof AOS !== 'undefined') {
+            AOS.refresh();
+          }
+
+        } catch (err) {
+          console.error(err);
+          container.innerHTML = `
+            <div class="col-12 text-center text-danger font-code py-4">
+              <p class="mb-0">// Error al cargar los proyectos: verifica que projects/projects.json sea accesible.</p>
             </div>
           `;
-
-          container.insertAdjacentHTML('beforeend', cardHtml);
-        });
-
-        if (typeof AOS !== 'undefined') {
-          AOS.refresh();
         }
-
-      } catch (err) {
-        console.error(err);
-        container.innerHTML = `
-          <div class="col-12 text-center text-danger font-code py-4">
-            <p class="mb-0">// Error al cargar los proyectos: verifica que projects/projects.json sea accesible.</p>
-          </div>
-        `;
       }
-    }
 
-    document.addEventListener('DOMContentLoaded', loadProjects);
+      document.addEventListener('DOMContentLoaded', loadProjects);
   </script>
   
 </body>
