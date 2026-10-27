@@ -77,6 +77,17 @@
     "github_url": "https://github.com/trakerdev/moviesdirect"
   },
   {
+    "id": "panel-rtsp",
+    "name": "Panel RTSP Stream Viewer",
+    "type": "Streaming / DevOps",
+    "status": "online",
+    "icon": "videocam",
+    "description": "Panel web interactivo y ligero para la visualización, monitoreo y gestión de transmisiones de cámaras IP por protocolo RTSP y HLS.",
+    "tags": ["PHP", "JavaScript", "RTSP", "HLS", "FFmpeg"],
+    "live_url": "",
+    "github_url": "https://github.com/trakerdev/Panel-RTSP"
+  },
+  {
     "id": "automation-suite",
     "name": "Server Automation Suite",
     "type": "CLI & DevOps",
