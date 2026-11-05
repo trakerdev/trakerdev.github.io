@@ -109,15 +109,15 @@
   "live_url": "",
   "github_url": "https://github.com/trakerdev/LimpiarMac"
 },
-  {
-    "id": "wpsoffice-2019-esp",
-    "name": "WPS Office 2019 Español",
-    "type": "Linux / Traducción",
-    "status": "archived",
-    "icon": "translate",
-    "description": "Paquete y scripts de traducción al español e interfaz adaptada para la suite ofimática WPS Office 2019 en distribuciones Linux.",
-    "tags": ["Linux", "Traducción", "Shell", "Open Source"],
-    "live_url": "",
-    "github_url": "https://github.com/trakerdev/WPSOffice-2019-Esp"
-  }
+{
+  "id": "wpsoffice-2019-esp",
+  "name": "WPS Office 2019 Español",
+  "type": "Linux / Traducción",
+  "status": "archived",
+  "icon": "translate",
+  "description": "Paquete y scripts de traducción al español e interfaz adaptada para la suite ofimática WPS Office 2019 en distribuciones Linux.",
+  "tags": ["Linux", "Traducción", "Shell", "Open Source"],
+  "live_url": "",
+  "github_url": "https://github.com/trakerdev/WPSOffice-2019-Esp"
+}
 ]
