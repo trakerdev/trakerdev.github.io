@@ -99,6 +99,17 @@
     "github_url": "https://github.com/trakerdev"
   },
   {
+  "id": "limpiarmac",
+  "name": "LimpiarMac CLI",
+  "type": "macOS / Scripting",
+  "status": "online",
+  "icon": "cleaning_services",
+  "description": "Script de mantenimiento y optimización para macOS diseñado para purgar cachés del sistema, logs acumulados, temporales y liberar espacio en disco.",
+  "tags": ["Bash", "macOS", "Shell", "CLI", "SysAdmin"],
+  "live_url": "",
+  "github_url": "https://github.com/trakerdev/LimpiarMac"
+},
+  {
     "id": "wpsoffice-2019-esp",
     "name": "WPS Office 2019 Español",
     "type": "Linux / Traducción",
